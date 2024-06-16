@@ -39,7 +39,6 @@ class Orden(Base):
 
     id_orden = Column(Integer, primary_key=True, index=True)
     id_cliente = Column(Integer, ForeignKey("clientes.id_cliente"))
-    id_estado = Column(Integer, ForeignKey("estados_ordenes.id_estado"))
     fecha = Column(TIMESTAMP, default="CURRENT_TIMESTAMP")
     direccion_entrega = Column(String(255), nullable=False)
     total = Column(DECIMAL(10, 2), nullable=False)
@@ -51,7 +50,6 @@ class OrdenDetalle(Base):
     id_orden_detalle = Column(Integer, primary_key=True, index=True)
     id_orden = Column(Integer, ForeignKey("ordenes.id_orden"))
     id_alimento = Column(Integer, ForeignKey("alimentos.id_alimento"))
-    id_estado = Column(Integer, ForeignKey("estados_ordenes.id_estado"))
     cantidad = Column(Integer, nullable=False)
     precio_unitario = Column(DECIMAL(10, 2), nullable=False)
     precio_total = Column(DECIMAL(10, 2), nullable=False)
