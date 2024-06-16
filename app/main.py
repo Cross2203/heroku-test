@@ -86,30 +86,29 @@ def update_alimento(alimento_id: int, alimento: schemas.AlimentoCreate, db: Sess
 def delete_alimento(alimento_id: int, db: Session = Depends(get_db)):
     return crud.delete_alimento(db, alimento_id)
 
-@app.post("/ordenes_detalles/", response_model=schemas.OrdenDetalle)
-def create_orden_detalles(orden_detalles: schemas.OrdenDetalleCreate, db: Session = Depends(get_db)):
-    return crud.create_orden_detalles(db=db, orden_detalles=orden_detalles)
+@app.post("/estado_ordenes/", response_model=schemas.EstadoOrden)
+def create_estado_ordenes(estado_ordenes: schemas.EstadoOrdenCreate, db: Session = Depends(get_db)):
+    return crud.create_estado_ordenes(db=db, estado_ordenes=estado_ordenes)
 
-@app.get("/ordenes_detalles/", response_model=List[schemas.OrdenDetalle])
-def read_orden_detalles(skip: int = 0, limit: int = 10, db: Session = Depends(get_db)):
-    return crud.get_orden_detalles(db, skip=skip, limit=limit)
+@app.get("/estado_ordenes/", response_model=List[schemas.EstadoOrden])
+def read_estado_ordenes(skip: int = 0, limit: int = 10, db: Session = Depends(get_db)):
+    return crud.get_estado_ordenes(db, skip=skip, limit=limit)
 
-@app.get("/ordenes_detalles/{orden_detalles_id}", response_model=schemas.OrdenDetalle)
-def read_orden_detalles(orden_detalles_id: int, db: Session = Depends(get_db)):
-    db_orden_detalles = crud.get_orden_detalles(db, orden_detalles_id=orden_detalles_id)
-    if db_orden_detalles is None:
-        raise HTTPException(status_code=404, detail="Orden Detalles not found")
-    return db_orden_detalles
+@app.get("/estado_ordenes/{estado_ordenes_id}", response_model=schemas.EstadoOrden)
+def read_estado_ordenes(estado_ordenes_id: int, db: Session = Depends(get_db)):
+    db_estado_ordenes = crud.get_estado_ordenes(db, estado_ordenes_id=estado_ordenes_id)
+    if db_estado_ordenes is None:
+        raise HTTPException(status_code=404, detail="EstadoOrden not found")
+    return db_estado_ordenes
 
-@app.put("/ordenes_detalles/{orden_detalles_id}", response_model=schemas.OrdenDetalle) 
-def update_orden_detalles(orden_detalles_id: int, orden_detalles: schemas.OrdenDetalleCreate, db: Session = Depends(get_db)):
-    return crud.update_orden_detalles(db, orden_detalles_id, orden_detalles)
+@app.put("/estado_ordenes/{estado_ordenes_id}", response_model=schemas.EstadoOrden)
+def update_estado_ordenes(estado_ordenes_id: int, estado_ordenes: schemas.EstadoOrdenCreate, db: Session = Depends(get_db)):
+    return crud.update_estado_ordenes(db, estado_ordenes_id, estado_ordenes)
 
-@app.delete("/ordenes_detalles/{orden_detalles_id}", response_model=schemas.OrdenDetalle)
-def delete_orden_detalles(orden_detalles_id: int, db: Session = Depends(get_db)):
-    return crud.delete_orden_detalles(db, orden_detalles_id)
+@app.delete("/estado_ordenes/{estado_ordenes_id}", response_model=schemas.EstadoOrden)
+def delete_estado_ordenes(estado_ordenes_id: int, db: Session = Depends(get_db)):
+    return crud.delete_estado_ordenes(db, estado_ordenes_id)
 
-# Ordenes Endpoints
 @app.post("/ordenes/", response_model=schemas.Orden)
 def create_orden(orden: schemas.OrdenCreate, db: Session = Depends(get_db)):
     return crud.create_orden(db=db, orden=orden)
