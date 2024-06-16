@@ -132,6 +132,19 @@ def update_orden(orden_id: int, orden: schemas.OrdenCreate, db: Session = Depend
 def delete_orden(orden_id: int, db: Session = Depends(get_db)):
     return crud.delete_orden(db, orden_id)
 
+@app.get("ordenes/ultima", response_model=schemas.Orden)
+def read_ultima_orden(db: Session = Depends(get_db)):
+    db_orden = db.query(models.Orden).order_by(models.Orden.fecha.desc()).first()
+    if db_orden is None:
+        raise HTTPException(status_code=404, detail="No orders found")
+    return db_orden
+
+
+
+@app.get("/ordenes/{orden_id}/detalles/", response_model=List[schemas.OrdenDetalle])
+def read_ordenes_detalles(orden_id: int, db: Session = Depends(get_db)):
+    return crud.get_ordenes_detalles(db, orden_id=orden_id)
+
 # Ordenes Detalles Endpoints
 @app.post("/ordenes_detalles/", response_model=schemas.OrdenDetalle)
 def create_orden_detalle(orden_detalle: schemas.OrdenDetalleCreate, db: Session = Depends(get_db)):
