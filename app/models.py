@@ -1,6 +1,7 @@
 from sqlalchemy import Column, Integer, String, ForeignKey, DECIMAL, TIMESTAMP
 from sqlalchemy.orm import relationship
 from .database import Base
+import datetime
 
 class Cliente(Base):
     __tablename__ = "clientes"
@@ -40,7 +41,7 @@ class Orden(Base):
     id_orden = Column(Integer, primary_key=True, index=True)
     id_cliente = Column(Integer, ForeignKey("clientes.id_cliente"))
     id_estado = Column(Integer, ForeignKey("estados_ordenes.id_estado"))
-    fecha = Column(TIMESTAMP, default="CURRENT_TIMESTAMP")
+    fecha = Column(datetime, default=datetime.now())
     direccion_entrega = Column(String(255), nullable=False)
     total = Column(DECIMAL(10, 2), nullable=False)
     estado = Column(String(20), default="pendiente")
