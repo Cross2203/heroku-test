@@ -134,11 +134,7 @@ def delete_orden(orden_id: int, db: Session = Depends(get_db)):
 
 @app.get("ordenes/ultima", response_model=schemas.Orden)
 def read_ultima_orden(db: Session = Depends(get_db)):
-    db_orden = db.query(models.Orden).order_by(models.Orden.fecha.desc()).first()
-    if db_orden is None:
-        raise HTTPException(status_code=404, detail="No orders found")
-    return db_orden
-
+    return crud.read_ultima_orden(db)
 
 
 @app.get("/ordenes/{orden_id}/detalles/", response_model=List[schemas.OrdenDetalle])

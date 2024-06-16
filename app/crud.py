@@ -189,3 +189,44 @@ def delete_orden_detalle(db: Session, orden_detalle_id: int):
         db.delete(db_orden_detalle)
         db.commit()
     return db_orden_detalle
+
+def read_ultima_orden(db: Session):
+    return db.query(models.Orden).order_by(models.Orden.fecha.desc()).first()
+
+def create_estado_ordenes(db: Session, estado_ordenes: schemas.EstadoOrdenCreate):
+    db_estado_orden = models.EstadoOrden(**estado_ordenes.model_dump())
+    db.add(db_estado_orden)
+    db.commit()
+    db.refresh(db_estado_orden)
+    return db_estado_orden
+
+def get_estado_ordenes(db: Session, skip: int = 0, limit: int = 10):
+    return db.query(models.EstadoOrden).offset(skip).limit(limit).all()
+
+def get_estado_orden(db: Session, estado_orden_id: int):
+    return db.query(models.EstadoOrden).filter(models.EstadoOrden.id_estado == estado_orden_id).first()
+
+def update_estado_ordenes(db: Session, estado_ordenes_id: int, estado_ordenes: schemas.EstadoOrdenCreate):
+    db_estado_orden = get_estado_orden(db, estado_ordenes_id)
+    if db_estado_orden:
+        for key, value in estado_ordenes.model_dump().items():
+            setattr(db_estado_orden, key, value)
+        db.commit()
+        db.refresh(db_estado_orden)
+    return db_estado_orden
+
+def delete_estado_ordenes(db: Session, estado_ordenes_id: int):
+    db_estado_orden = get_estado_orden(db, estado_ordenes_id)
+    if db_estado_orden:
+        db.delete(db_estado_orden)
+        db.commit()
+    return db_estado_orden
+
+def update_ultima_orden(db: Session, orden: schemas.OrdenCreate):
+    ultima_orden = db.query(models.Orden).order_by(models.Orden.fecha.desc()).first()
+    if ultima_orden:
+        for key, value in orden.model_dump().items():
+            setattr(ultima_orden, key, value)
+        db.commit()
+        db.refresh(ultima_orden)
+    return ultima_orden
