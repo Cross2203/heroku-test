@@ -95,11 +95,11 @@ def read_estado_ordenes(skip: int = 0, limit: int = 10, db: Session = Depends(ge
     return crud.get_estado_ordenes(db, skip=skip, limit=limit)
 
 @app.get("/estado_ordenes/{estado_ordenes_id}", response_model=schemas.EstadoOrden)
-def read_estado_ordenes(estado_ordenes_id: int, db: Session = Depends(get_db)):
-    db_estado_ordenes = crud.get_estado_ordenes(db, estado_ordenes_id=estado_ordenes_id)
-    if db_estado_ordenes is None:
+def read_estado_orden(estado_orden_id: int, db: Session = Depends(get_db)):
+    db_estado_orden = crud.get_estado_ordes(db, estado_orden_id=estado_orden_id)
+    if db_estado_orden is None:
         raise HTTPException(status_code=404, detail="EstadoOrden not found")
-    return db_estado_ordenes
+    return db_estado_orden
 
 @app.put("/estado_ordenes/{estado_ordenes_id}", response_model=schemas.EstadoOrden)
 def update_estado_ordenes(estado_ordenes_id: int, estado_ordenes: schemas.EstadoOrdenCreate, db: Session = Depends(get_db)):
