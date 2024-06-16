@@ -62,7 +62,7 @@ def update_tipo_alimento(tipo_id: int, tipo: schemas.TipoAlimentoCreate, db: Ses
 def delete_tipo_alimento(tipo_id: int, db: Session = Depends(get_db)):
     return crud.delete_tipo_alimento(db, tipo_id)
 
-# Alimentos Endpoints
+
 @app.post("/alimentos/", response_model=schemas.Alimento)
 def create_alimento(alimento: schemas.AlimentoCreate, db: Session = Depends(get_db)):
     return crud.create_alimento(db=db, alimento=alimento)
@@ -85,6 +85,29 @@ def update_alimento(alimento_id: int, alimento: schemas.AlimentoCreate, db: Sess
 @app.delete("/alimentos/{alimento_id}", response_model=schemas.Alimento)
 def delete_alimento(alimento_id: int, db: Session = Depends(get_db)):
     return crud.delete_alimento(db, alimento_id)
+
+@app.post("/ordenes_detalles/", response_model=schemas.OrdenDetalle)
+def create_orden_detalles(orden_detalles: schemas.OrdenDetalleCreate, db: Session = Depends(get_db)):
+    return crud.create_orden_detalles(db=db, orden_detalles=orden_detalles)
+
+@app.get("/ordenes_detalles/", response_model=List[schemas.OrdenDetalle])
+def read_orden_detalles(skip: int = 0, limit: int = 10, db: Session = Depends(get_db)):
+    return crud.get_orden_detalles(db, skip=skip, limit=limit)
+
+@app.get("/ordenes_detalles/{orden_detalles_id}", response_model=schemas.OrdenDetalle)
+def read_orden_detalles(orden_detalles_id: int, db: Session = Depends(get_db)):
+    db_orden_detalles = crud.get_orden_detalles(db, orden_detalles_id=orden_detalles_id)
+    if db_orden_detalles is None:
+        raise HTTPException(status_code=404, detail="Orden Detalles not found")
+    return db_orden_detalles
+
+@app.put("/ordenes_detalles/{orden_detalles_id}", response_model=schemas.OrdenDetalle) 
+def update_orden_detalles(orden_detalles_id: int, orden_detalles: schemas.OrdenDetalleCreate, db: Session = Depends(get_db)):
+    return crud.update_orden_detalles(db, orden_detalles_id, orden_detalles)
+
+@app.delete("/ordenes_detalles/{orden_detalles_id}", response_model=schemas.OrdenDetalle)
+def delete_orden_detalles(orden_detalles_id: int, db: Session = Depends(get_db)):
+    return crud.delete_orden_detalles(db, orden_detalles_id)
 
 # Ordenes Endpoints
 @app.post("/ordenes/", response_model=schemas.Orden)
