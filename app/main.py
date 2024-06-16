@@ -132,7 +132,7 @@ def update_orden(orden_id: int, orden: schemas.OrdenCreate, db: Session = Depend
 def delete_orden(orden_id: int, db: Session = Depends(get_db)):
     return crud.delete_orden(db, orden_id)
 
-@app.get("ordenes/ultima", response_model=schemas.Orden)
+@app.get("/ultimaorden/", response_model=schemas.Orden)
 def read_ultima_orden(db: Session = Depends(get_db)):
     return crud.read_ultima_orden(db)
 
