@@ -191,7 +191,7 @@ def delete_orden_detalle(db: Session, orden_detalle_id: int):
     return db_orden_detalle
 
 def read_ultima_orden(db: Session):
-    return db.query(models.Orden).order_by(models.Orden.fecha.desc()).first()
+    return db.query(models.Orden).order_by(models.Orden.id_orden.desc()).first()
 
 def create_estado_ordenes(db: Session, estado_ordenes: schemas.EstadoOrdenCreate):
     db_estado_orden = models.EstadoOrden(**estado_ordenes.model_dump())

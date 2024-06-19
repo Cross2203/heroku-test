@@ -41,7 +41,7 @@ class Orden(Base):
     id_orden = Column(Integer, primary_key=True, index=True)
     id_cliente = Column(Integer, ForeignKey("clientes.id_cliente"))
     id_estado = Column(Integer, ForeignKey("estados_ordenes.id_estado"))
-    fecha = Column(TIMESTAMP, default=datetime.date.today(), nullable=False)
+    fecha = Column(TIMESTAMP, default=datetime.datetime.now(), nullable=False)
     direccion_entrega = Column(String(255), nullable=False)
     total = Column(DECIMAL(10, 2), nullable=False)
     estado = Column(String(20), default="pendiente")

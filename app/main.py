@@ -114,8 +114,8 @@ def create_orden(orden: schemas.OrdenCreate, db: Session = Depends(get_db)):
     return crud.create_orden(db=db, orden=orden)
 
 @app.get("/ordenes/", response_model=List[schemas.Orden])
-def read_ordenes(skip: int = 0, limit: int = 10, db: Session = Depends(get_db)):
-    return crud.get_ordenes(db, skip=skip, limit=limit)
+def read_ordenes(skip: int = 0, db: Session = Depends(get_db)):
+    return crud.get_ordenes(db, skip=skip)
 
 @app.get("/ordenes/{orden_id}", response_model=schemas.Orden)
 def read_orden(orden_id: int, db: Session = Depends(get_db)):
